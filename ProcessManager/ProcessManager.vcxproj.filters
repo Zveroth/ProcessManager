@@ -18,18 +18,18 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Process.cpp">
+    <ClCompile Include="ProcessManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProcessManager.cpp">
+    <ClCompile Include="ProcessBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Process.h">
+    <ClInclude Include="ProcessManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessManager.h">
+    <ClInclude Include="ProcessBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,6 +11,8 @@ ProcessBase::~ProcessBase()
 {
 	if (m_ChildProcess)
 		m_ChildProcess->OnAbort();
+
+	//printf("\nProcess deleted\n\n");
 }
 
 void ProcessBase::AttachChild(std::shared_ptr<ProcessBase>& AttachedChild)
@@ -35,12 +37,12 @@ void ProcessBase::SetState(ProcessState State)
 
 void ProcessBase::Succeed()
 {
-	assert(m_State == ProcessState::PENDING || m_State == ProcessState::PAUSED);
+	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);
 	m_State = ProcessState::SUCCEDED;
 }
 
 void ProcessBase::Fail()
 {
-	assert(m_State == ProcessState::PENDING || m_State == ProcessState::PAUSED);
+	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);
 	m_State = ProcessState::FAILED;
 }

@@ -12,7 +12,10 @@ void ProcessManager::Update(const float& DeltaTime)
 	std::list<std::shared_ptr<ProcessBase>>::iterator Iter = m_ProcessList.begin();
 	while (Iter != m_ProcessList.end())
 	{
-		std::shared_ptr<ProcessBase> Process = *Iter;
+		std::list<std::shared_ptr<ProcessBase>>::iterator CacheIter = Iter;
+		Iter++;
+
+		std::shared_ptr<ProcessBase> Process = *CacheIter;
 
 		if (Process->GetState() == ProcessBase::ProcessState::UNINITIALIZED)
 			Process->OnInit();
@@ -25,8 +28,12 @@ void ProcessManager::Update(const float& DeltaTime)
 			switch(Process->GetState())
 			{
 			case ProcessBase::ProcessState::SUCCEDED:
+			{
 				Process->OnSuccess();
+				if (std::shared_ptr<ProcessBase> ChildProc = Process->ReleaseChildProcess())
+					AttachProcess(ChildProc);
 				break;
+			}
 
 			case ProcessBase::ProcessState::FAILED:
 				Process->OnFailure();
@@ -37,10 +44,8 @@ void ProcessManager::Update(const float& DeltaTime)
 				break;
 			}
 
-			m_ProcessList.erase(Iter);
+			m_ProcessList.erase(CacheIter);
 		}
-
-		Iter++;
 	}
 }
 
@@ -55,17 +60,19 @@ void ProcessManager::AbortAllProcesses(bool bImmediately)
 	std::list<std::shared_ptr<ProcessBase>>::iterator Iter = m_ProcessList.begin();
 	while (Iter != m_ProcessList.end())
 	{
-		std::shared_ptr<ProcessBase> Process = *Iter;
+		std::list<std::shared_ptr<ProcessBase>>::iterator CacheIter = Iter;
+		Iter++;
+
+		std::shared_ptr<ProcessBase> Process = *CacheIter;
 		if (Process->IsActive())
 		{
 			Process->SetState(ProcessBase::ProcessState::ABORTED);
 			if (bImmediately)
 			{
 				Process->OnAbort();
-				m_ProcessList.erase(Iter);
+				m_ProcessList.erase(CacheIter);
 			}
 		}
-		Iter++;
 	}
 }
 

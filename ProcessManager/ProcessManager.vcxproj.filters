@@ -32,5 +32,8 @@
     <ClInclude Include="ProcessBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DelayProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

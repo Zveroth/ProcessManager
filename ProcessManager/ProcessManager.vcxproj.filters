@@ -35,5 +35,14 @@
     <ClInclude Include="DelayProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SFXPlayProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sound.ogg" />
   </ItemGroup>
 </Project>

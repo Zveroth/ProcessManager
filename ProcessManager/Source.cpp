@@ -3,13 +3,14 @@
 #include "stdio.h"
 #include "chrono"
 
+#include "irrKlang.h"
 #include "ProcessManager.h"
 #include "DelayProcess.h"
-
-
+#include "SFXPlayProcess.h"
 
 int main()
 {
+	SoundEngine = irrklang::createIrrKlangDevice();
 	ProcessManager* PManager = new ProcessManager();
 
 	{
@@ -28,7 +29,20 @@ int main()
 
 		std::shared_ptr<ProcessBase> DProcessE(new DelayProcess(5.0f));
 		PManager->AttachProcess(DProcessE);
+
+		SoundEffect Effect("sound.ogg", false, (SoundEffectsFlags::WAVES_REVERB));
+
+		std::shared_ptr<ProcessBase> SoundProcess(new SFXPlayProcess(Effect));
+		DProcessE->AttachChild(SoundProcess);
 	}
+
+	{
+		SoundEffect Effect("sound.ogg", false);
+
+		std::shared_ptr<ProcessBase> SoundProcess(new SFXPlayProcess(Effect));
+		PManager->AttachProcess(SoundProcess);
+	}
+
 
 	std::chrono::time_point<std::chrono::high_resolution_clock> Point = std::chrono::high_resolution_clock::now();
 
@@ -43,5 +57,6 @@ int main()
 	}
 
 	delete PManager;
+	SoundEngine->drop();
 	return 0;
 }

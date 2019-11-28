@@ -17,7 +17,7 @@ ProcessBase::~ProcessBase()
 
 void ProcessBase::AttachChild(std::shared_ptr<ProcessBase>& AttachedChild)
 {
-	if (m_ChildProcess)
+	if (m_ChildProcess)//If a process already has a child then we create a chain
 		m_ChildProcess->AttachChild(AttachedChild);
 	else
 		m_ChildProcess = AttachedChild;
@@ -37,12 +37,12 @@ void ProcessBase::SetState(ProcessState State)
 
 void ProcessBase::Succeed()
 {
-	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);
+	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);//A process that isn't active can not finish
 	m_State = ProcessState::SUCCEDED;
 }
 
 void ProcessBase::Fail()
 {
-	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);
+	assert(m_State == ProcessState::RUNNING || m_State == ProcessState::PAUSED);//A process that isn't active can not finish
 	m_State = ProcessState::FAILED;
 }

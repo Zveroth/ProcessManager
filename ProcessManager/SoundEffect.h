@@ -22,7 +22,7 @@ public:
 	SoundEffect(const char* SFXFileName = nullptr, bool Looping = false, SoundEffectsFlags::Value Flags = SoundEffectsFlags::NONE) : FileName(SFXFileName), bLooping(false), SoundFlags(Flags) {};
 
 	inline void SetFile(char* SFXFileName) { FileName = SFXFileName; }
-	inline void SetLooping(bool Looping) { bLooping - Looping; }
+	inline void SetLooping(bool Looping) { bLooping = Looping; }
 	inline void SetEffectFlags(SoundEffectsFlags::Value Flags) { SoundFlags = Flags; }
 
 private:
